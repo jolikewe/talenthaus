@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>talenthaus | An official TikTok Creator Network for LIVE creators</title>
+<meta name="description" content="Join talenthaus, an official TikTok Creator Network. Keep 100% of your diamond revenue, earn performance incentives and referral rewards, and get coaching and support for your LIVE. Free to join.">
+<meta name="theme-color" content="#08070e">
+<link rel="canonical" href="https://jolikewe.github.io/talenthaus/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="talenthaus | Scale up your TikTok LIVE">
+<meta property="og:description" content="An official TikTok Creator Network. Free to join. Scan the QR code to apply.">
+<meta property="og:url" content="https://jolikewe.github.io/talenthaus/">
+<meta property="og:image" content="https://jolikewe.github.io/talenthaus/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Scale up your TikTok livestream with talenthaus">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jolikewe.github.io/talenthaus/assets/og.jpg">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#08070e; --surface:#121020; --surface2:#191628; --line:rgba(255,255,255,.1);
+  --text:#f4f2fb; --muted:#aaa6c0;
+  --pink:#ff5c9d; --violet:#9a78ff; --blue:#4f8cff; --gold:#ffb93d; --mint:#3df2c4;
+  --grad:linear-gradient(100deg,var(--pink),var(--violet) 55%,var(--blue));
+  --display:"Unbounded","Noto Sans SC",system-ui,sans-serif;
+  --body:"Plus Jakarta Sans","Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --pad:clamp(20px,5vw,56px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--text);font:400 1rem/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mint);outline-offset:3px;border-radius:6px}
+/* language switching */
+html[data-lang="en"] .zh,html[data-lang="zh"] .en{display:none!important}
+html[data-lang="zh"] body{line-height:1.75}
+html[data-lang="zh"] h1,html[data-lang="zh"] h2,html[data-lang="zh"] h3{font-family:"Noto Sans SC",var(--display);font-weight:800;letter-spacing:0}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;color:#000;padding:10px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+
+/* header */
+header.top{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) var(--pad) 10px;background:linear-gradient(var(--ink) 30%,transparent)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{height:34px;width:auto}
+.lang{display:flex;padding:3px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(10px)}
+.lang button{font:600 .82rem var(--body);color:var(--muted);background:none;border:0;padding:7px 14px;border-radius:999px;cursor:pointer;min-height:34px}
+.lang button[aria-pressed="true"]{background:#fff;color:#12101c}
+
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(1.55rem,5.6vw,2.6rem);font-weight:700}
+h3{font-size:1.05rem;font-weight:700}
+p{margin:0}
+section{padding:clamp(64px,11vw,120px) var(--pad);position:relative}
+.wrap{max-width:1120px;margin:0 auto}
+.lede{color:var(--muted);font-size:1.05rem;max-width:34em;margin-top:14px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 30px;border-radius:999px;font:700 1.05rem var(--body);text-decoration:none;color:#fff;background:var(--grad);border:0;cursor:pointer;box-shadow:0 10px 40px -8px rgba(154,120,255,.65);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -8px rgba(255,92,157,.6)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--mint)}
+
+/* hero */
+.hero{min-height:100svh;padding-top:96px;padding-bottom:64px;display:grid;align-items:center;overflow:hidden;
+  background:radial-gradient(900px 600px at 85% 20%,rgba(154,120,255,.28),transparent 60%),radial-gradient(700px 500px at 0% 100%,rgba(255,92,157,.2),transparent 60%),var(--ink)}
+.hero .wrap{display:grid;gap:36px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.05);font-weight:600;font-size:.9rem}
+.badge i{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(61,242,196,.7);animation:ping 2.2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(61,242,196,0)}100%{box-shadow:0 0 0 0 rgba(61,242,196,0)}}
+.hero h1{font-size:clamp(2.1rem,9.4vw,4.4rem);font-weight:800;margin:22px 0 18px}
+.hero .lede{font-size:1.12rem}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+@media(max-width:560px){.hero .cta .btn{flex:1 1 100%}}
+.facts{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:520px}
+.facts li{padding:12px 12px 10px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:.8rem;color:var(--muted);line-height:1.3}
+.facts b{display:block;font-family:var(--display);font-size:clamp(1.05rem,4.6vw,1.4rem);color:var(--text);margin-bottom:4px;white-space:nowrap}
+html[data-lang="zh"] .facts b{font-family:"Noto Sans SC",var(--display)}
+.poster{position:relative;justify-self:center;width:min(100%,360px)}
+.poster::before{content:"";position:absolute;inset:-6px;border-radius:30px;background:conic-gradient(from 200deg,var(--pink),var(--violet),var(--blue),var(--mint),var(--pink));filter:blur(22px);opacity:.55}
+.poster img{position:relative;border-radius:24px;border:1px solid rgba(255,255,255,.18);aspect-ratio:2/3;object-fit:cover;width:100%;height:auto}
+@media(min-width:900px){.hero .wrap{grid-template-columns:1.15fr .85fr;gap:64px}.poster{width:min(100%,420px);transform:rotate(2.5deg)}}
+@media(prefers-reduced-motion:no-preference){
+  .hero .wrap>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .hero .wrap>*:nth-child(2){animation-delay:.15s}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}}
+}
+
+/* streams */
+.streams{background:var(--ink)}
+.cards{display:grid;gap:14px;margin-top:40px}
+.card{position:relative;padding:24px;border-radius:22px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--c)}
+.card::after{content:"";position:absolute;width:220px;height:220px;right:-90px;top:-110px;border-radius:50%;background:var(--c);opacity:.16;filter:blur(40px)}
+.card .ico{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--c);margin-bottom:18px}
+.card .ico svg{width:26px;height:26px;fill:var(--c)}
+.card h3{color:var(--c);text-transform:none}
+.card p{color:var(--muted);margin-top:8px}
+.tag{display:inline-block;margin-top:18px;padding:8px 16px;border:1.5px solid var(--c);border-radius:12px;color:var(--c);font-weight:700;font-size:.92rem}
+.tag small{display:block;color:var(--muted);font-weight:500;font-size:.8rem}
+.c-blue{--c:var(--blue)}.c-gold{--c:var(--gold)}.c-violet{--c:var(--violet)}
+.calc{margin-top:40px;padding:clamp(20px,4vw,36px);border-radius:28px;background:radial-gradient(600px 300px at 100% 0%,rgba(154,120,255,.18),transparent 70%),var(--surface);border:1px solid rgba(154,120,255,.35)}
+.calc-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.calc-head h3{font-size:clamp(1.15rem,4.4vw,1.5rem)}
+.cur{display:flex;padding:3px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.cur button{font:700 .85rem var(--body);color:var(--muted);background:none;border:0;padding:7px 12px;border-radius:999px;cursor:pointer;min-height:34px}
+.cur button[aria-pressed="true"]{background:#fff;color:#12101c}
+.calc-grid{display:grid;gap:26px;margin-top:24px}
+@media(min-width:860px){.calc-grid{grid-template-columns:1fr 1.1fr;gap:40px}}
+.field{display:block}
+.field+.field{margin-top:26px}
+.q{display:block;font-weight:700;margin-bottom:8px}
+.val{display:block;font-size:1rem;color:var(--muted)}
+.val b{font-family:var(--display);font-size:clamp(1.7rem,7vw,2.2rem);color:var(--text)}
+.val .sub{font-weight:600;color:var(--mint)}
+.val.small{margin-top:12px}.val.small b{font-size:1.3rem}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin-top:6px;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--violet) var(--p,30%),rgba(255,255,255,.12) var(--p,30%))}
+input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:rgba(255,255,255,.12)}
+input[type=range]::-moz-range-progress{height:8px;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--violet))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;margin-top:-10px;box-shadow:0 0 0 6px rgba(154,120,255,.35)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 6px rgba(154,120,255,.35)}
+.chips{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:8px}
+.chips button{min-height:46px;border-radius:14px;border:1.5px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);font:700 .95rem var(--body);cursor:pointer}
+.chips button[aria-pressed="true"]{border-color:transparent;background:var(--grad)}
+.out{padding:22px;border-radius:22px;background:rgba(8,7,14,.55);border:1px solid var(--line)}
+.out .k{color:var(--muted);font-weight:600}
+.out .big{font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,11vw,3.6rem);line-height:1.05;margin:6px 0 2px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.out .k2{color:var(--muted);font-size:.95rem}
+.mult{display:inline-block;margin-left:6px;padding:3px 10px;border-radius:99px;background:rgba(61,242,196,.14);color:var(--mint);font-weight:700;font-size:.85rem}
+.mult:empty{display:none}
+.bars{display:grid;gap:10px;margin-top:20px}
+.bar-row{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;font-size:.85rem}
+.bar-row .lbl{color:var(--muted);font-weight:600}
+.bar-row .num{font-weight:700;font-variant-numeric:tabular-nums;min-width:4.5em;text-align:right}
+.track{display:flex;height:14px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.seg{display:block;height:100%;width:0;transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.s-now{background:#6c6890}.s-dia{background:var(--blue)}.s-inc{background:var(--gold)}.s-ref{background:var(--violet)}
+.lines{list-style:none;margin:20px 0 0;padding:16px 0 0;border-top:1px solid var(--line);display:grid;gap:12px}
+.lines li{display:grid;grid-template-columns:12px 1fr auto;gap:12px;align-items:center}
+.lines small{display:block;color:var(--muted);font-size:.8rem}
+.lines b{font-variant-numeric:tabular-nums}
+.dot{width:12px;height:12px;border-radius:4px}
+.hint{display:block;color:var(--muted);font-size:.8rem;margin-top:8px}
+.calc-note{color:var(--muted);font-size:.8rem;margin-top:18px;line-height:1.5}
+.fine{color:var(--muted);font-size:.85rem;margin-top:22px;text-align:center}
+
+/* benefits */
+.benefits{background:linear-gradient(180deg,var(--ink),#0d0b18 60%,var(--ink))}
+.bgrid{display:grid;gap:14px;margin-top:40px}
+.ben{display:flex;gap:18px;align-items:center;padding:18px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.ben .tile{flex:none;width:60px;height:60px;border-radius:16px;display:grid;place-items:center;background:var(--g)}
+.ben .tile svg{width:28px;height:28px;fill:#fff}
+.ben p{color:var(--muted);font-size:.95rem;margin-top:3px}
+.ben:nth-child(1){--g:linear-gradient(135deg,#d58aa6,#b0678d)}
+.ben:nth-child(2){--g:linear-gradient(135deg,#e0856e,#b9566f)}
+.ben:nth-child(3){--g:linear-gradient(135deg,#7f82d6,#5a5aa8)}
+.ben:nth-child(4){--g:linear-gradient(135deg,#9a6fd1,#6f4aa5)}
+@media(min-width:760px){.bgrid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:repeat(3,1fr)}}
+
+/* gallery */
+.gallery-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.arrows{display:none;gap:10px}
+.arrows button{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:#fff;font-size:1.2rem;cursor:pointer}
+.arrows button:hover{border-color:var(--mint)}
+@media(min-width:760px){.arrows{display:flex}}
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:36px calc(var(--pad)*-1) 0;padding:6px var(--pad) 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-padding-inline:var(--pad)}
+.rail::-webkit-scrollbar{display:none}
+.slide{flex:none;width:min(72vw,290px);scroll-snap-align:start;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.slide img{width:100%;height:auto;aspect-ratio:1536/2752}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:4px}
+.dots span{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.22);transition:.25s}
+.dots span.on{width:26px;background:var(--grad)}
+.swipe{color:var(--muted);font-size:.85rem;text-align:center;margin-top:12px}
+@media(min-width:760px){.swipe{display:none}}
+
+/* videos */
+.videos{background:#0d0b18}
+.vgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:40px}
+@media(min-width:900px){.vgrid{grid-template-columns:repeat(4,1fr);gap:18px}}
+.vcard{display:flex;flex-direction:column;gap:12px}
+.vbox{position:relative;aspect-ratio:9/16;border-radius:20px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.vbox video{width:100%;height:100%;object-fit:cover}
+.vbox .play{position:absolute;inset:0;display:grid;place-items:center;border:0;cursor:pointer;background:linear-gradient(transparent 50%,rgba(0,0,0,.55));padding:0}
+.vbox .play span{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:transform .15s}
+.vbox .play:hover span{transform:scale(1.08)}
+.vbox .play svg{width:26px;height:26px;fill:#12101c;margin-left:4px}
+.vbox.playing .play{display:none}
+.vcard h3{font-size:.92rem;font-family:var(--body);font-weight:700;line-height:1.35}
+html[data-lang="zh"] .vcard h3{font-family:"Noto Sans SC",var(--body)}
+
+/* faq */
+.faq{background:var(--ink)}
+.qa{display:grid;gap:12px;margin-top:36px;max-width:780px}
+.qa details{border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.qa details[open]{border-color:rgba(154,120,255,.45)}
+.qa summary{list-style:none;cursor:pointer;padding:18px 52px 18px 20px;font-weight:700;position:relative}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:1.4rem;font-weight:500;color:var(--muted)}
+.qa details[open] summary::after{content:"\2212"}
+.qa p{padding:0 20px 18px;color:var(--muted)}
+
+/* join */
+.join{background:radial-gradient(800px 500px at 50% 0%,rgba(79,140,255,.22),transparent 65%),var(--ink)}
+.jgrid{display:grid;gap:36px;align-items:center}
+@media(min-width:860px){.jgrid{grid-template-columns:.8fr 1.2fr;gap:72px}}
+.qr{justify-self:center;width:min(100%,340px);position:relative}
+.qr::before{content:"";position:absolute;inset:-4px;border-radius:30px;background:conic-gradient(from 90deg,var(--mint),var(--blue),var(--violet),var(--pink),var(--mint));filter:blur(18px);opacity:.5}
+.qr img{position:relative;border-radius:24px;width:100%;height:auto;aspect-ratio:1280/2324;border:1px solid rgba(255,255,255,.18)}
+html[data-lang="zh"] .qr img{aspect-ratio:1280/2228}
+.steps{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:12px;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:16px;align-items:flex-start;padding:16px 18px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.steps li::before{content:counter(s);flex:none;width:34px;height:34px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-weight:700;font-size:.95rem}
+.steps b{display:block}
+.note{display:flex;gap:10px;margin-top:20px;color:var(--muted);font-size:.92rem}
+.note svg{flex:none;width:18px;height:18px;margin-top:3px;fill:var(--muted)}
+.join .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+
+footer{padding:44px var(--pad) calc(44px + 76px);border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between}
+footer img{height:36px;width:auto;opacity:.95}
+.top-right{display:flex;align-items:center;gap:14px}
+.navlink{color:inherit;text-decoration:none;font-weight:600;font-size:.9rem;opacity:.85;padding:6px 4px}
+.navlink:hover,.navlink:focus-visible{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.navlink.apply{display:none}
+@media(min-width:900px){.navlink.apply{display:inline-flex;align-items:center;min-height:34px;padding:0 16px;border-radius:999px;background:var(--grad);opacity:1}}
+
+/* sticky mobile CTA */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--ink) 40%);transform:translateY(120%);transition:transform .3s}
+.sticky.show{transform:none}
+.sticky .btn{width:100%}
+@media(min-width:900px){.sticky{display:none}footer{padding-bottom:44px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#join"><span class="en">Skip to apply</span><span class="zh">跳到申请</span></a>
+
+<header class="top">
+  <a class="brand" href="#top" aria-label="talenthaus"><img src="assets/logo-white.png" alt="talenthaus" width="60" height="34"></a>
+  <div class="top-right">
+  <a class="navlink" href="#faq"><span class="en">FAQ</span><span class="zh">常见问题</span></a>
+  <a class="navlink apply" href="#join"><span class="en">Apply</span><span class="zh">申请</span></a>
+  <div class="lang" role="group" aria-label="Language / 语言">
+    <button type="button" data-set="en" aria-pressed="true">EN</button>
+    <button type="button" data-set="zh" aria-pressed="false" lang="zh">中文</button>
+  </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="badge"><i></i><span class="en">An official TikTok Creator Network</span><span class="zh">TikTok Creator Network 官方认证公会</span></span>
+      <h1><span class="en">Scale up your TikTok LIVE with a team behind you.</span><span class="zh">专业团队助力，让你的直播更上一层。</span></h1>
+      <p class="lede"><span class="en">Keep 100% of your diamond revenue, then add performance incentives and referral rewards on top. Resources and opportunities from Day 1.</span><span class="zh">你原有的直播钻石收益 100% 归你所有，再额外获得直播激励与邀请奖励。从第一天开始，享有成长资源与机会。</span></p>
+      <div class="cta">
+        <a class="btn" href="#join"><span class="en">Apply to join</span><span class="zh">立即申请加入</span></a>
+        <a class="btn ghost" href="#calc"><span class="en">Estimate your earnings</span><span class="zh">估算你的收益</span></a>
+      </div>
+      <ul class="facts">
+        <li><b><span class="en">Free</span><span class="zh">免费</span></b><span class="en">to join</span><span class="zh">加入</span></li>
+        <li><b>100%</b><span class="en">of your diamonds stay yours</span><span class="zh">钻石收益归你</span></li>
+        <li><b>+<span class="en">Bonus</span><span class="zh">奖金</span></b><span class="en">and referral rewards on top</span><span class="zh">及邀请奖励</span></li>
+      </ul>
+    </div>
+    <div class="poster">
+      <img src="assets/scale-up.webp" width="1024" height="1536" alt="Scale up your TikTok livestream: exclusive opportunities, coaching and support, content optimization, community and resources" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<section class="streams" id="earn">
+  <div class="wrap">
+    <h2><span class="en">Three ways your LIVE earns.</span><span class="zh">三重收益，助力你的直播。</span></h2>
+    <p class="lede"><span class="en">Your existing income stays yours. Everything else is additional.</span><span class="zh">你原有的收益完整保留，其余皆为额外增加。</span></p>
+    <div class="cards">
+      <article class="card c-blue">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3h11.6L23 9.2 12 21.5 1 9.2 6.2 3Zm1.4 2L4.4 8.8h4.2L9.9 5H7.6Zm4.4 0-1.4 3.8h2.8L12 5Zm2.1 0 1.3 3.8h4.2L16.4 5h-2.3ZM4.6 10.8 11 18.2 8.7 10.8H4.6Zm6.2 0L12 19l1.2-8.2h-2.4Zm4.5 0L13 18.2l6.4-7.4h-4.1Z"/></svg></div>
+        <h3><span class="en">Your diamond revenue</span><span class="zh">直播钻石收益</span></h3>
+        <p><span class="en">From gifts you receive on TikTok LIVE.</span><span class="zh">你原有的直播钻石收益。</span></p>
+        <div class="tag"><span class="en">100% yours<small>We don't touch it.</small></span><span class="zh">100% 归你所有</span></div>
+      </article>
+      <article class="card c-gold">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 1.8 3 6.4 7 .9-5.1 4.8 1.3 7-6.2-3.4-6.2 3.4 1.3-7L2 9.1l7-.9 3-6.4Z"/></svg></div>
+        <h3><span class="en">Performance incentives</span><span class="zh">直播激励</span></h3>
+        <p><span class="en">Extra rewards from us, based on how your LIVEs perform.</span><span class="zh">根据直播表现获得额外奖励。</span></p>
+        <div class="tag"><span class="en">Additional</span><span class="zh">额外增加</span></div>
+      </article>
+      <article class="card c-violet">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.5a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Zm0 2c-3.6 0-7 1.7-7 4.6V20h14v-1.9c0-2.9-3.4-4.6-7-4.6Zm8.2-2a3.3 3.3 0 1 0-1.6-6.2 6 6 0 0 1 0 5.900c.5.2 1 .3 1.6.3Zm.8 2.200c1.8.6 4 2 4 4.300V20h-4v-1.900c0-1.7-.7-3.1-2-4.3.6-.2 1.3-.3 2-.3Z"/></svg></div>
+        <h3><span class="en">Creator referral rewards</span><span class="zh">邀请达人奖励</span></h3>
+        <p><span class="en">Extra income when creators you refer join the network.</span><span class="zh">邀请达人加入官方认证公会，获得额外奖励。</span></p>
+        <div class="tag"><span class="en">Additional</span><span class="zh">额外增加</span></div>
+      </article>
+    </div>
+    <div class="calc" id="calc">
+      <div class="calc-head">
+        <h3><span class="en">Estimate what you could earn</span><span class="zh">估算你的潜在收益</span></h3>
+        <div class="cur" role="group" aria-label="Currency">
+          <button type="button" data-cur="MYR">RM</button><button type="button" data-cur="SGD">S$</button><button type="button" data-cur="PHP">₱</button><button type="button" data-cur="USD">US$</button>
+        </div>
+      </div>
+      <div class="calc-grid">
+        <div class="inputs">
+          <label class="field" for="nowR">
+            <span class="q"><span class="en">Diamonds you earn per month now</span><span class="zh">你目前每月获得的钻石</span></span>
+            <span class="val"><b id="nowD">20K</b> 💎 <span class="sub">≈ <span id="nowM">RM400</span></span></span>
+            <input type="range" id="nowR" min="0" max="16" step="1" value="4">
+          </label>
+          <div class="field">
+            <span class="q"><span class="en">Where do you want to be in 3 months?</span><span class="zh">3 个月后你想达到多少？</span></span>
+            <div class="chips" id="goal" role="group">
+              <button type="button" data-x="1"><span class="en">Same as now</span><span class="zh">保持现状</span></button>
+              <button type="button" data-x="2">2×</button>
+              <button type="button" data-x="3">3×</button>
+              <button type="button" data-x="5">5×</button>
+            </div>
+            <span class="val small"><b id="goalD">40K</b> 💎 <span class="en">a month</span><span class="zh">每月</span></span>
+          </div>
+          <div class="field">
+            <span class="q"><span class="en">Creator friends you could refer</span><span class="zh">你可以邀请的达人朋友</span></span>
+            <div class="chips" id="refs" role="group">
+              <button type="button" data-r="0"><span class="en">None</span><span class="zh">暂无</span></button>
+              <button type="button" data-r="1">1</button>
+              <button type="button" data-r="3">3</button>
+              <button type="button" data-r="5">5</button>
+            </div>
+            <span class="hint"><span class="en">Assumes each earns about what you earn now. Referral rewards last 6 months per creator.</span><span class="zh">假设每位与你目前收益相近。每位被邀请达人的奖励为期 6 个月。</span></span>
+          </div>
+        </div>
+        <div class="out" aria-live="polite">
+          <div class="k"><span class="en">If you hit your goal with talenthaus</span><span class="zh">若你与 talenthaus 一起达成目标</span></div>
+          <div class="big" id="total">RM1,600</div>
+          <div class="k2"><span class="en">a month, up to*</span><span class="zh">每月，最高*</span> <span id="mult" class="mult"></span></div>
+          <div class="bars">
+            <div class="bar-row"><span class="lbl"><span class="en">Today</span><span class="zh">目前</span></span><div class="track"><i class="seg s-now" id="bNow"></i></div><span class="num" id="nNow"></span></div>
+            <div class="bar-row"><span class="lbl"><span class="en">With us</span><span class="zh">加入后</span></span><div class="track"><i class="seg s-dia" id="bDia"></i><i class="seg s-inc" id="bInc"></i><i class="seg s-ref" id="bRef"></i></div><span class="num" id="nTot"></span></div>
+          </div>
+          <ul class="lines">
+            <li><i class="dot s-dia"></i><span><span class="en">Diamond revenue at your goal</span><span class="zh">目标钻石收益</span><small><span class="en">100% yours</span><span class="zh">100% 归你</span></small></span><b id="lDia"></b></li>
+            <li><i class="dot s-inc"></i><span><span class="en">Performance incentives</span><span class="zh">直播激励</span><small><span class="en">bonus on your diamonds, up to 4%</span><span class="zh">钻石收益奖金，最高 4%</span></small></span><b id="lInc"></b></li>
+            <li><i class="dot s-ref"></i><span><span class="en">Referral rewards</span><span class="zh">邀请奖励</span><small><span class="en">up to 6% of each referral's diamonds, for 6 months</span><span class="zh">每位被邀请达人钻石收益的最高 6%，为期 6 个月</span></small></span><b id="lRef"></b></li>
+          </ul>
+        </div>
+      </div>
+      <p class="calc-note"><span class="en">*Estimate only, not a guarantee. 1 diamond ≈ US$0.005 (about 200 diamonds = US$1); TikTok sets the actual value. Bonus and referral rewards depend on campaign rules and performance; "up to" is the maximum. The biggest lever is growing your diamonds, which is what our coaching is for. Exchange rates are approximate.</span><span class="zh">*仅为估算，并非保证。1 钻石 ≈ 0.005 美元（约 200 钻石 = 1 美元），实际价值以 TikTok 为准。奖金与邀请奖励根据活动规则及表现而定，“最高”为上限。最大的提升来自钻石收益的增长，这正是我们指导的重点。汇率为近似值。</span></p>
+    </div>
+
+  </div>
+</section>
+
+<section class="benefits">
+  <div class="wrap">
+    <h2><span class="en">Support that goes beyond going live.</span><span class="zh">不只是开播，更有全程支持。</span></h2>
+    <div class="bgrid">
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 4.5 4L12 4l4.5 7L21 7l-2 11H5L3 7Zm2.4 13h13.200v2H5.400v-2Z"/></svg></div>
+        <div><h3><span class="en">Exclusive opportunities</span><span class="zh">专属成长机会</span></h3><p><span class="en">Exclusive PK battles and campaigns.</span><span class="zh">专属 PK 机会与专属活动。</span></p></div></div>
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2.500c-4.4 0-8 2.2-8 5V22h16v-2.500c0-2.8-3.6-5-8-5Z"/></svg></div>
+        <div><h3><span class="en">Coaching &amp; support</span><span class="zh">直播运营指导</span></h3><p><span class="en">Onboarding, an engagement plan and gifting strategy.</span><span class="zh">入驻指导、互动运营规划、礼物运营策略。</span></p></div></div>
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-2 14.500v-9l7.5 4.500L10 16.500Z"/></svg></div>
+        <div><h3><span class="en">Content optimisation</span><span class="zh">内容优化</span></h3><p><span class="en">Short-video boosting to draw in more followers.</span><span class="zh">优质内容曝光，吸引更多潜在粉丝。</span></p></div></div>
+      <div class="ben"><div class="tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm8.5 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8 13c-3 0-6 1.5-6 4v2h12v-2c0-2.5-3-4-6-4Zm8.5 0c-.5 0-1 0-1.5.1 1.2.9 2 2.1 2 3.900v2h5v-2c0-2.2-2.7-4-5.5-4Z"/></svg></div>
+        <div><h3><span class="en">Community &amp; resources</span><span class="zh">达人社群与专属资源</span></h3><p><span class="en">A creator community and exclusive resources, from Day 1.</span><span class="zh">从第一天开始，加入达人社群并获取专属资源。</span></p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="gallery-head">
+      <div>
+        <h2><span class="en">How much does a TikTok LIVE creator actually earn?</span><span class="zh">TikTok 主播究竟赚多少？</span></h2>
+        <p class="lede"><span class="en">Swipe through, then see the 3-month roadmap we follow.</span><span class="zh">滑动查看，了解我们的三个月成长计划。</span></p>
+      </div>
+      <div class="arrows"><button type="button" id="prev" aria-label="Previous slide">&#8592;</button><button type="button" id="next" aria-label="Next slide">&#8594;</button></div>
+    </div>
+    <div class="rail" id="rail" tabindex="0" role="region" aria-label="Carousel">
+      <div class="slide en"><img src="assets/earn-en-1.webp" width="960" height="1720" alt="How much does a TikTok LIVE creator actually earn?" loading="lazy"></div>
+      <div class="slide en"><img src="assets/earn-en-2.webp" width="960" height="1720" alt="Diamonds earned across Month 1, 2 and 3. Best part? Free to join." loading="lazy"></div>
+      <div class="slide en"><img src="assets/earn-en-3.webp" width="960" height="1720" alt="Our 3-month creator roadmap" loading="lazy"></div>
+      <div class="slide en"><img src="assets/earn-en-4.webp" width="960" height="1720" alt="What makes you different? Average creators versus talenthaus creators" loading="lazy"></div>
+      <div class="slide en"><img src="assets/earn-en-5.webp" width="960" height="1720" alt="talenthaus provides exclusive incentives to grow your LIVE revenue from Day 1" loading="lazy"></div>
+      <div class="slide zh"><img src="assets/earn-zh-1.webp" width="960" height="1720" alt="TikTok 主播究竟赚多少？" loading="lazy"></div>
+      <div class="slide zh"><img src="assets/earn-zh-2.webp" width="960" height="1720" alt="第一月、第二月、第三月。最大的优势？免费加入。" loading="lazy"></div>
+      <div class="slide zh"><img src="assets/earn-zh-3.webp" width="960" height="1720" alt="三个月成长计划" loading="lazy"></div>
+      <div class="slide zh"><img src="assets/earn-zh-4.webp" width="960" height="1720" alt="你的优势在哪里？普通主播与 talenthaus 主播" loading="lazy"></div>
+      <div class="slide zh"><img src="assets/earn-zh-5.webp" width="960" height="1720" alt="talenthaus 从第一天开始提供助力主播成长的资源与机会" loading="lazy"></div>
+    </div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <p class="swipe"><span class="en">Swipe to see more</span><span class="zh">左右滑动查看更多</span></p>
+    <p class="fine"><span class="en">Results vary based on individual performance and engagement.</span><span class="zh">实际奖励金额将根据活动规则及达人表现而定。</span></p>
+  </div>
+</section>
+
+<section class="videos">
+  <div class="wrap">
+    <h2><span class="en">Watch before you apply.</span><span class="zh">申请前，先看看我们。</span></h2>
+    <p class="lede"><span class="en">Short videos on how a Creator Network works and what you get.</span><span class="zh">几段短视频，了解公会如何运作以及你能获得什么。</span></p>
+    <div class="vgrid">
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-3way.jpg" aria-label="The 3-way partnership video"><source src="assets/v-3way.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
+        <h3><span class="en">The 3-way partnership: creator, agency and TikTok</span><span class="zh">三方合作：主播、公会与 TikTok</span></h3></div>
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-benefits.jpg" aria-label="Benefits of joining a creator network video"><source src="assets/v-benefits.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
+        <h3><span class="en">Benefits of joining a creator network</span><span class="zh">加入公会的好处</span></h3></div>
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-intro1.jpg" aria-label="talenthaus intro video"><source src="assets/v-intro1.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
+        <h3><span class="en">Meet talenthaus</span><span class="zh">认识 talenthaus</span></h3></div>
+      <div class="vcard"><div class="vbox"><video preload="none" playsinline controls controlslist="nodownload" poster="assets/v-intro2.jpg" aria-label="talenthaus intro video 2"><source src="assets/v-intro2.mp4" type="video/mp4"></video><button class="play" type="button" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M6 3.500v17l15-8.5-15-8.500Z"/></svg></span></button></div>
+        <h3><span class="en">Life at talenthaus</span><span class="zh">走进 talenthaus</span></h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <h2><span class="en">New to Creator Networks?</span><span class="zh">第一次了解公会？</span></h2>
+    <p class="lede"><span class="en">The questions creators ask us most.</span><span class="zh">主播们最常问的问题。</span></p>
+    <div class="qa">
+      <details><summary><span class="en">What is a TikTok Creator Network?</span><span class="zh">什么是 TikTok Creator Network（公会）？</span></summary>
+        <p><span class="en">It's an agency officially partnered with TikTok to help LIVE creators grow. You keep going live on your own account. The network adds coaching, campaigns and extra incentives on top.</span><span class="zh">公会是与 TikTok 官方合作、帮助直播主播成长的机构。你依然用自己的账号开播，公会在此基础上提供运营指导、专属活动和额外激励。</span></p></details>
+      <details><summary><span class="en">Does it cost anything to join?</span><span class="zh">加入需要付费吗？</span></summary>
+        <p><span class="en">No. Joining talenthaus is free.</span><span class="zh">不需要。加入 talenthaus 完全免费。</span></p></details>
+      <details><summary><span class="en">Do you take a share of my diamonds?</span><span class="zh">公会会抽取我的钻石收益吗？</span></summary>
+        <p><span class="en">No. 100% of your diamond revenue stays yours. Performance incentives and referral rewards are paid on top of it.</span><span class="zh">不会。你的直播钻石收益 100% 归你所有，直播激励和邀请奖励都是额外增加的。</span></p></details>
+      <details><summary><span class="en">What happens when I scan the QR code?</span><span class="zh">扫描二维码后会发生什么？</span></summary>
+        <p><span class="en">TikTok shows you information about the Creator Network so you can look it over. You only join if you choose to apply.</span><span class="zh">TikTok 会显示公会的相关信息供你查看。只有在你选择申请后才会加入。</span></p></details>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="wrap jgrid">
+    <div class="qr">
+      <img class="en" src="assets/qr-en.webp" width="900" height="1634" alt="QR code to apply to join talenthaus on the TikTok Creator Network" loading="lazy">
+      <img class="zh" src="assets/qr-zh.webp" width="900" height="1566" alt="申请加入 talenthaus 的二维码" loading="lazy">
+    </div>
+    <div>
+      <h2><span class="en">Apply to join talenthaus.</span><span class="zh">申请加入 talenthaus。</span></h2>
+      <p class="lede"><span class="en">Scan the QR code to learn about the Creator Network and apply to join. It's free to join.</span><span class="zh">扫描二维码，了解公会信息并申请加入。免费加入。</span></p>
+      <ol class="steps">
+        <li><div><b><span class="en">Save the QR image to your phone</span><span class="zh">将二维码图片保存到手机</span></b></div></li>
+        <li><div><b><span class="en">Open TikTok &gt; Profile &gt; Add friends &gt; Scan</span><span class="zh">打开 TikTok &gt;【主页】&gt;【添加好友】&gt;【扫描】</span></b></div></li>
+        <li><div><b><span class="en">Tap the photo icon and choose the saved image</span><span class="zh">点击相册图标，选择刚保存的图片</span></b></div></li>
+      </ol>
+      <div class="actions">
+        <a class="btn en" href="assets/qr-en.webp" download="talenthaus-apply-qr.webp">Save the QR image</a>
+        <a class="btn zh" href="assets/qr-zh.webp" download="talenthaus-apply-qr-zh.webp">保存二维码图片</a>
+      </div>
+      <p class="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg><span class="en">Scanning only shows you information about the Creator Network. Nothing is signed until you choose to apply.</span><span class="zh">扫描二维码仅用于查看公会相关信息，在你决定申请之前不会有任何签约。</span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="assets/logo-white.png" alt="talenthaus" width="62" height="36">
+    <span><span class="en">talenthaus · An official TikTok Creator Network</span><span class="zh">talenthaus · TikTok Creator Network 官方认证公会</span></span>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn" href="#join"><span class="en">Apply to join</span><span class="zh">立即申请加入</span></a></div>
+
+<script>
+(function(){
+  var root=document.documentElement,btns=document.querySelectorAll('.lang button');
+  function setLang(l,save){
+    root.dataset.lang=l;root.lang=l==='zh'?'zh-Hans':'en';
+    btns.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.set===l)});
+    document.title=l==='zh'?'talenthaus | TikTok Creator Network 官方认证公会':'talenthaus | An official TikTok Creator Network for LIVE creators';
+    if(save)try{localStorage.setItem('th-lang',l)}catch(e){}
+    buildDots();
+    if(window.thCalc)window.thCalc();
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.set,true)})});
+  var saved;try{saved=localStorage.getItem('th-lang')}catch(e){}
+  var init=saved||((navigator.language||'').toLowerCase().indexOf('zh')===0?'zh':'en');
+
+  var rail=document.getElementById('rail'),dots=document.getElementById('dots');
+  function slides(){return Array.prototype.filter.call(rail.children,function(s){return s.offsetParent!==null})}
+  function buildDots(){
+    var n=slides().length;dots.innerHTML='';
+    for(var i=0;i<n;i++)dots.appendChild(document.createElement('span'));
+    rail.scrollLeft=0;upd();
+  }
+  function upd(){
+    var s=slides();if(!s.length)return;
+    var mid=rail.scrollLeft+rail.clientWidth/2,idx=0,best=1e9;
+    s.forEach(function(el,i){var d=Math.abs(el.offsetLeft+el.offsetWidth/2-mid);if(d<best){best=d;idx=i}});
+    if(rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-4)idx=s.length-1;
+    Array.prototype.forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===idx)});
+  }
+  rail.addEventListener('scroll',function(){requestAnimationFrame(upd)},{passive:true});
+  function step(dir){var w=slides()[0].offsetWidth+14;rail.scrollBy({left:dir*w,behavior:'smooth'})}
+  document.getElementById('prev').onclick=function(){step(-1)};
+  document.getElementById('next').onclick=function(){step(1)};
+  rail.addEventListener('keydown',function(e){if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+
+  document.querySelectorAll('.vbox').forEach(function(box){
+    var v=box.querySelector('video'),p=box.querySelector('.play');
+    v.controls=false;
+    p.addEventListener('click',function(){
+      document.querySelectorAll('.vbox video').forEach(function(o){if(o!==v)o.pause()});
+      v.controls=true;v.muted=false;box.classList.add('playing');v.play().catch(function(){});
+    });
+  });
+
+  var st=document.getElementById('sticky'),hero=document.querySelector('.hero .cta'),join=document.getElementById('join');
+  if('IntersectionObserver' in window){
+    var heroOut=false,joinIn=false;
+    function sync(){st.classList.toggle('show',heroOut&&!joinIn)}
+    new IntersectionObserver(function(e){heroOut=!e[0].isIntersecting;sync()}).observe(hero);
+    new IntersectionObserver(function(e){joinIn=e[0].isIntersecting;sync()},{threshold:.15}).observe(join);
+  }
+  // earnings calculator
+  var STEPS=[1e3,2e3,5e3,1e4,2e4,3e4,5e4,75e3,1e5,15e4,2e5,3e5,5e5,75e4,1e6,15e5,2e6];
+  var USD_PER_DIAMOND=0.005;        // ~200 diamonds = US$1 (TikTok does not publish an official rate)
+  // From the talenthaus "Creator Earnings" model: the network earns 10-20% commission on a creator's
+  // production; the creator gets 20% of that on their own diamonds, and 30% of it on each referred creator (6 months).
+  var MAX_COMMISSION=0.20, OWN_SHARE=0.20, REF_SHARE=0.30, REF_MONTHS=6;
+  var INCENTIVE_UP_TO=MAX_COMMISSION*OWN_SHARE;   // up to 4% of your diamond revenue
+  var REFERRAL_UP_TO=MAX_COMMISSION*REF_SHARE;    // up to 6% of each referred creator's diamond revenue
+  var FX={USD:{r:1,p:'US$'},MYR:{r:4,p:'RM'},SGD:{r:1.28,p:'S$'},PHP:{r:59,p:'₱'}}; // approx, Nov 2026
+  var refBox=document.getElementById('refs'),nowR=document.getElementById('nowR'),goal=document.getElementById('goal'),curBox=document.querySelector('.cur');
+  var cur,x=2,refs=0,$=function(id){return document.getElementById(id)};
+  try{cur=localStorage.getItem('th-cur')}catch(e){}
+  if(!FX[cur])cur=/^zh|^ms|-MY$/i.test(navigator.language||'')?'MYR':/-SG$/i.test(navigator.language||'')?'SGD':/-PH$|^fil|^tl/i.test(navigator.language||'')?'PHP':'MYR';
+  function kd(n){return n>=1e6?(+(n/1e6).toFixed(2))+'M':n>=1e3?(+(n/1e3).toFixed(1))+'K':String(n)}
+  function money(d){var v=d*USD_PER_DIAMOND*FX[cur].r;return FX[cur].p+Math.round(v).toLocaleString('en-US')}
+  function calc(){
+    var now=STEPS[+nowR.value],tgt=now*x,inc=tgt*INCENTIVE_UP_TO,ref=refs*now*REFERRAL_UP_TO,tot=tgt+inc+ref;
+    nowR.style.setProperty('--p',(nowR.value/(STEPS.length-1)*100)+'%');
+    $('nowD').textContent=kd(now);$('nowM').textContent=money(now);
+    $('goalD').textContent=kd(tgt);
+    $('total').textContent=money(tot);
+    $('nNow').textContent=money(now);$('nTot').textContent=money(tot);
+    $('lDia').textContent=money(tgt);$('lInc').textContent='+'+money(inc);
+    var m=now?tot/now:0;
+    $('mult').textContent=m>=1.05?(root.dataset.lang==='zh'?'目前的 '+(+m.toFixed(1))+' 倍':(+m.toFixed(1))+'× today'):'';
+    $('bNow').style.width=(now/tot*100)+'%';$('bDia').style.width=(tgt/tot*100)+'%';$('bInc').style.width=(inc/tot*100)+'%';$('bRef').style.width=(ref/tot*100)+'%';$('lRef').textContent=refs?'+'+money(ref):(root.dataset.lang==='zh'?'额外':'Extra');
+    goal.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.x===x)});
+    refBox.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.r===refs)});
+    curBox.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.cur===cur)});
+  }
+  nowR.addEventListener('input',calc);
+  refBox.addEventListener('click',function(e){var b=e.target.closest('button');if(b){refs=+b.dataset.r;calc()}});
+  goal.addEventListener('click',function(e){var b=e.target.closest('button');if(b){x=+b.dataset.x;calc()}});
+  curBox.addEventListener('click',function(e){var b=e.target.closest('button');if(b){cur=b.dataset.cur;try{localStorage.setItem('th-cur',cur)}catch(_){}calc()}});
+  window.thCalc=calc;
+
+  setLang(init,false);
+})();
+</script>
+</body>
+</html>

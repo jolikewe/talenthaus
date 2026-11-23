@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Campaign Username Extractor</title>
+<style>
+  :root{
+    --bg:#0b0f1a; --bg-2:#0e1422; --panel:#141b2c; --panel-2:#192135; --panel-3:#1e2740;
+    --border:#26314c; --border-soft:#1d2740;
+    --text:#eaeef7; --muted:#8b95ac; --faint:#586080;
+    --amber:#f6b34b; --amber-deep:#e0902a; --teal:#3fd6bd; --teal-deep:#1f8f7f;
+    --red:#ff7a7a; --red-bg:#1e1418; --warn:#f6b34b; --warn-bg:#1c1710;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1100px 500px at 12% -6%, rgba(246,179,75,.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(63,214,189,.07), transparent 55%),
+      var(--bg);
+    color:var(--text); font-family:var(--sans); line-height:1.55;
+    padding:40px 22px 72px; max-width:960px; margin:0 auto; -webkit-font-smoothing:antialiased;
+  }
+  header{display:flex;gap:16px;align-items:flex-start;margin:0 0 8px}
+  .sig{display:flex;gap:3px;align-items:flex-end;height:38px;padding-top:5px}
+  .sig i{width:4px;border-radius:2px;background:linear-gradient(var(--amber),var(--amber-deep));display:block;opacity:.9}
+  .sig i:nth-child(1){height:14px}.sig i:nth-child(2){height:26px}.sig i:nth-child(3){height:20px}.sig i:nth-child(4){height:33px;background:linear-gradient(var(--teal),var(--teal-deep))}
+  .head-txt{flex:1}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin:0 0 7px}
+  h1{font-size:28px;font-weight:680;margin:0 0 8px;letter-spacing:-.02em}
+  .sub{color:var(--muted);font-size:14.5px;margin:0;max-width:64ch}
+  .rule{height:1px;margin:22px 0 24px;background:linear-gradient(90deg,var(--amber),rgba(63,214,189,.5) 45%,transparent 80%)}
+  details.help{background:var(--panel);border:1px solid var(--border-soft);border-radius:12px;margin:0 0 20px;overflow:hidden}
+  details.help[open]{border-color:var(--border)}
+  details.help summary{cursor:pointer;padding:13px 18px;font-size:13px;color:var(--text);font-weight:560;list-style:none;user-select:none;display:flex;align-items:center}
+  details.help summary::-webkit-details-marker{display:none}
+  details.help summary::before{content:"";width:6px;height:6px;border-right:2px solid var(--amber);border-bottom:2px solid var(--amber);transform:rotate(-45deg);transition:transform .15s;margin-right:12px;margin-left:2px}
+  details.help[open] summary::before{transform:rotate(45deg)}
+  details.help .body{padding:2px 18px 16px 34px;color:var(--muted);font-size:13px}
+  details.help ol{margin:6px 0;padding-left:18px} details.help li{margin:6px 0}
+  code{font-family:var(--mono);background:var(--panel-3);padding:1.5px 6px;border-radius:5px;color:var(--text);font-size:12px}
+  label.field{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;color:var(--muted);margin:0 0 9px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  label.field .hint{color:var(--faint);text-transform:none;letter-spacing:0;font-size:11.5px}
+  textarea{width:100%;min-height:210px;resize:vertical;background:var(--bg-2);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:16px;font-family:var(--mono);font-size:12.5px;line-height:1.6;outline:none;tab-size:2;transition:border-color .15s,box-shadow .15s}
+  textarea:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(246,179,75,.12)}
+  textarea::placeholder{color:var(--faint)}
+  .row{display:flex;gap:11px;margin:16px 0 0;flex-wrap:wrap;align-items:center}
+  .opts{display:flex;flex-direction:column;gap:8px;margin:16px 0 0;padding:12px 14px;background:var(--panel);border:1px solid var(--border-soft);border-radius:10px}
+  .opts label{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);cursor:pointer}
+  .opts input{accent-color:var(--amber);width:15px;height:15px;cursor:pointer}
+  .opt-hint{color:var(--faint);font-size:11.5px}
+  button{font-family:var(--sans);font-size:13.5px;font-weight:620;border-radius:9px;padding:11px 20px;border:1px solid transparent;cursor:pointer;transition:.13s}
+  button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .btn-primary{background:linear-gradient(180deg,var(--amber),var(--amber-deep));color:#241503;box-shadow:0 2px 14px rgba(246,179,75,.22)}
+  .btn-primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
+  .btn-primary:active{transform:translateY(0)}
+  .btn-ghost{background:transparent;color:var(--muted);border-color:var(--border)}
+  .btn-ghost:hover{color:var(--text);border-color:var(--faint)}
+  .btn-ok{background:rgba(63,214,189,.07);color:var(--teal);border-color:rgba(63,214,189,.28)}
+  .btn-ok:hover{background:rgba(63,214,189,.13)}
+  .status{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:auto}
+  .status.err{color:var(--red)} .status.ok{color:var(--teal)}
+  .results{margin-top:30px;display:none}
+  .summary{display:flex;align-items:center;gap:14px;margin:0 0 16px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:baseline;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:8px 16px}
+  .chip .count{font-family:var(--mono);font-size:20px;color:var(--amber);font-weight:640;line-height:1}
+  .chip .count-label{color:var(--muted);font-size:12.5px}
+  .sortnote{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+  .tablewrap{border:1px solid var(--border);border-radius:12px;overflow:auto;max-height:480px;background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead th{position:sticky;top:0;background:linear-gradient(180deg,var(--panel-2),var(--panel));text-align:left;padding:11px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+  th.num{text-align:right}
+  tbody td{padding:10px 16px;border-bottom:1px solid var(--border-soft)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr{transition:background .1s} tbody tr:hover{background:rgba(246,179,75,.05)}
+  td.name{font-weight:500}
+  td.handle a{font-family:var(--mono);color:var(--teal);text-decoration:none;border-bottom:1px solid transparent;white-space:nowrap}
+  td.handle a:hover{border-bottom-color:var(--teal)}
+  td.num{font-family:var(--mono);color:var(--text);text-align:right;white-space:nowrap}
+  td.missing{color:var(--faint)}
+  td.copyable{cursor:pointer;transition:color .1s}
+  td.copyable:hover{color:var(--amber)}
+  td.handle a{cursor:pointer}
+  .copytip{position:absolute;transform:translate(-50%,-100%);background:var(--teal);color:#04231f;font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .15s,transform .15s;z-index:80;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+  .copytip.show{opacity:1;transform:translate(-50%,-130%)}
+  .actions{display:flex;gap:11px;margin-top:16px;flex-wrap:wrap}
+  .empty,.errbox{display:none;margin-top:24px;padding:16px 18px;border-radius:12px;font-size:13.5px}
+  .empty{background:var(--panel);border:1px solid var(--border);color:var(--muted)}
+  .errbox{background:var(--red-bg);border:1px solid #4a2530;color:#ffc2c2} .errbox b{color:#ff9a9a}
+  .diag{display:none;margin-top:30px;border-top:1px dashed var(--border);padding-top:22px}
+  .diag h2{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;display:flex;align-items:center;gap:9px}
+  .diag h2 .dot{width:8px;height:8px;border-radius:50%;background:var(--warn);box-shadow:0 0 8px rgba(246,179,75,.6)}
+  .diag h2.clean .dot{background:var(--teal);box-shadow:0 0 8px rgba(63,214,189,.6)}
+  .diag-list{display:flex;flex-direction:column;gap:9px}
+  .diag-item{display:flex;gap:12px;align-items:flex-start;background:var(--warn-bg);border:1px solid #3a2f14;border-radius:10px;padding:11px 14px;font-size:13px;color:#f0dcb0}
+  .diag-item.clean{background:rgba(63,214,189,.05);border-color:rgba(63,214,189,.25);color:#bfeee4}
+  .diag-item .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;background:rgba(246,179,75,.16);color:var(--amber);padding:3px 8px;border-radius:5px;white-space:nowrap;margin-top:1px}
+  .diag-item.clean .tag{background:rgba(63,214,189,.14);color:var(--teal)}
+  .diag-item .n{font-family:var(--mono);color:#fff;font-weight:600}
+  .diag-samples{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:3px}
+  footer{margin-top:40px;color:var(--faint);font-size:11.5px;font-family:var(--mono);line-height:1.7}
+  @media (max-width:560px){ h1{font-size:23px} body{padding:28px 16px 60px} }
+
+  .grab{margin:8px 0 18px}.grab h2{font-size:17px;margin:0 0 10px}
+  .where{border:1px solid var(--border);border-radius:12px;padding:12px 16px;background:var(--bg-2);margin-bottom:14px}
+  .where p{margin:6px 0;font-size:13.5px;line-height:1.55}
+  .steps{padding-left:20px;margin:0 0 10px}.steps li{margin:8px 0;font-size:14px;line-height:1.55}
+  .bm{display:inline-block;margin:4px 6px;padding:7px 14px;border-radius:10px;background:var(--amber);color:#111;font-weight:700;text-decoration:none;cursor:grab}
+  .mini{display:block;color:var(--faint);font-size:12.5px;margin-top:4px}
+  .linkbtn{all:unset;cursor:pointer;color:var(--amber);text-decoration:underline}
+  .loaded{border:1px solid var(--amber);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:13.5px}
+</style>
+</head>
+<body>
+  <header>
+    <div class="sig" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="head-txt">
+      <p class="eyebrow">Local · runs in your browser</p>
+      <h1>TikTok Campaign Username Extractor</h1>
+      <p class="sub">Get every display name and @username from a TikTok LIVE campaign leaderboard, sorted by score. Use the one-click bookmark below, or paste data copied from your browser’s Network tab. Runs entirely in your browser.</p>
+    </div>
+  </header>
+
+  <div class="rule"></div>
+
+
+  <section class="grab" aria-labelledby="grabTitle">
+    <h2 id="grabTitle">One-click grab from a TikTok campaign page</h2>
+    <div class="where">
+      <p><b>Where the usernames come from:</b> the <b>leaderboard of a TikTok LIVE campaign / event page</b> on <code>tiktok.com</code> that you have open in your own browser and are logged into, e.g. the ranking tabs of a campaign (Star Legend, Rising Star, Star Seeker…).</p>
+      <p><b>What it reads:</b> only the leaderboard data that page loads: display name, @username, rank and score of the creators listed on it. If no leaderboard data has loaded, it falls back to the @profile links visible on the page.</p>
+      <p><b>What it doesn't do:</b> it runs only when you click it, only on the tab you're viewing. It doesn't read cookies, passwords, messages or anything outside that leaderboard, and sends nothing to any server. The data goes straight from your TikTok tab to this page in your browser.</p>
+    </div>
+    <ol class="steps">
+      <li><b>Install once:</b> drag this button to your bookmarks bar →
+        <a id="bm" class="bm" href="javascript:!function(){var t=%22https://jolikewe.github.io%22,e=/%22(handle_name|handleName|unique_id|uniqueId|nickname|display_name)%22%5Cs*:/;if(/(%5E|%5C.)tiktok%5C.com$/.test(location.hostname))if(window.__thGrab)window.__thGrab.show();else{var n=[],o={},a=window.fetch;window.fetch=function(){return a.apply(this,arguments).then(function(t){try{t.clone().text().then(d,function(){})}catch(t){}return t})};XMLHttpRequest.prototype.open;var r=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.send=function(){return this.addEventListener(%22load%22,function(){try{%22%22===this.responseType||%22text%22===this.responseType?d(this.responseText):%22json%22===this.responseType&&this.response&&d(JSON.stringify(this.response))}catch(t){}}),r.apply(this,arguments)};var i=document.createElement(%22div%22);i.setAttribute(%22style%22,%22position:fixed;z-index:2147483647;right:16px;bottom:16px;width:300px;padding:14px 16px;border-radius:14px;background:%2314131f;color:%23eceaf5;font:13px/1.45 system-ui,-apple-system,sans-serif;box-shadow:0 10px 40px rgba(0,0,0,.5);border:1px solid %232a2840%22),i.innerHTML='<div style=%22display:flex;justify-content:space-between;align-items:center;margin-bottom:6px%22><b style=%22font-size:14px%22>Grab usernames</b><button data-a=%22x%22 style=%22all:unset;cursor:pointer;opacity:.6;font-size:16px%22 aria-label=%22Close%22>%C3%97</button></div><div data-s style=%22color:%239a97b0;margin-bottom:8px%22>Starting%E2%80%A6</div><div style=%22color:%239a97b0;font-size:12px;margin-bottom:10px%22>Tip: click through each leaderboard tab and scroll to the bottom. New data is added automatically.</div><button data-a=%22o%22 style=%22all:unset;cursor:pointer;display:block;text-align:center;padding:9px;border-radius:10px;background:%2325f4ee;color:%230b0b12;font-weight:700;margin-bottom:6px%22>Open in extractor</button><button data-a=%22c%22 style=%22all:unset;cursor:pointer;display:block;text-align:center;padding:8px;border-radius:10px;border:1px solid %232a2840%22>Copy data instead</button>',document.body.appendChild(i);var s=i.querySelector(%22[data-s]%22);i.addEventListener(%22click%22,function(e){var n=e.target.getAttribute(%22data-a%22);if(%22x%22===n)i.style.display=%22none%22;else if(%22c%22===n){var o=u();if(!o)return void l(%22Nothing found yet. Open a leaderboard tab first.%22);navigator.clipboard.writeText(o).then(function(){l(%22Copied. Paste it into the extractor.%22)},function(){l(%22Copy blocked by the browser. Use Open in extractor.%22)})}else if(%22o%22===n){var a=u();if(!a)return void l(%22Nothing found yet. Open a leaderboard tab first.%22);var r=window.open(%22https://jolikewe.github.io/talenthaus/tools/username-extractor/%23from=bookmarklet%22,%22_blank%22);if(!r)return void l(%22Pop-up blocked. Allow pop-ups for tiktok.com, or use Copy.%22);var s=!1;window.addEventListener(%22message%22,function e(n){n.origin===t&&n.data&&%22extractor-ready%22===n.data.type&&!s&&(s=!0,window.removeEventListener(%22message%22,e),r.postMessage({type:%22tiktok-campaign-data%22,payload:a,page:location.href},t),l(%22Sent to the extractor tab.%22))})}}),window.__thGrab={show:function(){i.style.display=%22block%22}},function(){for(var t={},e=performance.getEntriesByType(%22resource%22),n=0;n<e.length;n++){var o=e[n];if(%22fetch%22===o.initiatorType||%22xmlhttprequest%22===o.initiatorType){try{if(!/(%5E|%5C.)tiktok(v)?%5C.com$|(%5E|%5C.)tiktokv%5C.us$/.test(new URL(o.name).hostname))continue}catch(t){continue}t[o.name]=1}}var r=Object.keys(t);return l(%22Checking %22+r.length+%22 data requests%E2%80%A6%22),Promise.all(r.map(function(t){return a(t,{credentials:%22include%22}).then(function(t){return t.ok?t.text():%22%22}).then(d,function(){}).then(function(){0})}))}().then(function(){n.length?c():l(p()?%22No leaderboard data yet; found profile links on the page. Open a leaderboard tab for full scores.%22:%22No leaderboard data yet. Open a leaderboard tab.%22)})}else alert(%22Open the TikTok campaign page first, then click this bookmark.%22);function d(t){if(!(%22string%22!=typeof t||t.length<20||t.length>8e6)){var a=t.trim();%22{%22!==a[0]&&%22[%22!==a[0]||e.test(a)&&!o[a]&&(o[a]=1,n.push(a),c())}}function p(){for(var t=[],e={},n=document.querySelectorAll('a[href*=%22/%40%22]'),o=0;o<n.length;o++){var a=n[o].href.match(/%5C/%40([A-Za-z0-9._]+)/);a&&!e[a[1]]&&(e[a[1]]=1,t.push({user:{handle_name:a[1],nickname:(n[o].innerText||%22%22).trim().split(%22%5Cn%22)[0]}}))}return t.length?JSON.stringify({source:%22page_links%22,data:{rankings:t}}):%22%22}function l(t){s.textContent=t}function c(){l(n.length+%22 leaderboard response%22+(1===n.length?%22%22:%22s%22)+%22 captured.%22)}function u(){return n.length?n.join(%22%5Cn%5Cn%22):p()}}();" title="Drag me to your bookmarks bar">Grab usernames</a>
+        <span class="mini">(On a phone or if dragging doesn't work: <button type="button" class="linkbtn" id="copyBm">copy the bookmark code</button>, create any bookmark, and paste it as the bookmark's URL.)</span></li>
+      <li><b>Open the campaign page</b> on tiktok.com while logged in.</li>
+      <li><b>Click the "Grab usernames" bookmark.</b> A small panel appears. Click through each leaderboard tab and scroll to the bottom so every rank loads; the count goes up as data arrives.</li>
+      <li><b>Click "Open in extractor"</b>. This page opens with the data loaded and the usernames extracted.</li>
+    </ol>
+    <p class="mini">Only use it on campaigns you take part in or manage, and in line with TikTok's terms. If TikTok changes its page and nothing is found, use the manual method below.</p>
+  </section>
+
+  <div class="rule"></div>
+  <details class="help">
+    <summary>Manual method: copy the data from the Network tab</summary>
+    <div class="body">
+      <ol>
+        <li>Open the campaign page while logged in, press <code>F12</code>, open the <b>Network</b> tab, filter by <code>Fetch/XHR</code>.</li>
+        <li>Click through each tab (Star Legend, Rising Star, Star Seeker). Scroll each to the bottom so every "load more" request fires.</li>
+        <li>For each request that returns rankings: right-click → <b>Copy</b> → <b>Copy response</b>, paste below. Stack all three tabs' responses in the box — they're all read and combined into one list.</li>
+        <li>Or right-click the Network list → <b>Save all as HAR</b>, open the file, paste its contents here. HAR is detected automatically.</li>
+      </ol>
+    </div>
+  </details>
+
+  <label class="field" for="input">Paste JSON response(s) or HAR contents<span class="hint">multiple blocks ok</span></label>
+  <textarea id="input" placeholder='e.g.  {"data":{"rankings":[{"user":{"nickname":"Nova","handle_name":"nova.live","score":48200}}, ...]}}
+
+Paste several responses back-to-back, or a whole .har file.'></textarea>
+
+  <div class="opts">
+    <label><input type="checkbox" id="optLargest" checked> Only the largest list per response <span class="opt-hint">(on = just the leaderboard; untick to combine every list into one score ranking)</span></label>
+    <label><input type="checkbox" id="optScore"> Only names with a score <span class="opt-hint">(drops viewers/entries that have no score)</span></label>
+    <label><input type="checkbox" id="optDeep"> Deep scan — grab every user object, not just lists</label>
+  </div>
+
+  <div class="row">
+    <button class="btn-primary" id="extract">Extract usernames</button>
+    <button class="btn-ghost" id="clear">Clear</button>
+    <span class="status" id="status"></span>
+  </div>
+
+  <div class="errbox" id="errbox"></div>
+  <div class="empty" id="empty"></div>
+
+  <section class="results" id="results">
+    <div class="summary">
+      <span class="chip"><span class="count" id="count">0</span><span class="count-label" id="countLabel">people found</span></span>
+      <span class="sortnote" id="sortnote"></span>
+    </div>
+    <div class="tablewrap">
+      <table><thead><tr id="headRow"></tr></thead><tbody id="tbody"></tbody></table>
+    </div>
+    <div class="actions">
+      <button class="btn-ok" id="copyExcel">Copy for Excel</button>
+      <button class="btn-ok" id="downloadExcel">Download Excel</button>
+      <button class="btn-ok" id="copyHandles">Copy @usernames only</button>
+    </div>
+  </section>
+
+  <section class="diag" id="diag">
+    <h2 id="diagTitle"><span class="dot"></span>Diagnostics &amp; anomalies</h2>
+    <div class="diag-list" id="diagList"></div>
+  </section>
+
+  <footer>
+    Data stays on your machine. This page and the bookmark make no requests to any server of ours; the bookmark only re-reads data from the TikTok tab you click it on.<br>
+    Extraction is deterministic: it scans the whole payload for name/handle fields — no AI, no guessing at runtime.
+  </footer>
+
+<script>
+(function(){
+  "use strict";
+  var BASE="https://www.tiktok.com/@";
+
+  var NAME_KEYS   = ["nickname","nick_name","display_name","displayname","displayName","nick"];
+  var HANDLE_KEYS = ["handle_name","handlename","handleName","unique_id","uniqueid","uniqueId","unique_name","username","user_name","handle"];
+  var RANK_KEYS   = ["rank","ranking","rank_no","position"];
+  var SCORE_KEYS  = ["score","coins","diamonds","diamond","diamond_count","total","points","point","gift_value","contribution","amount","stars","star","star_count","heat","consume","consume_diamond","gift_diamond","total_diamond"];
+
+  function lc(k){ return String(k).toLowerCase(); }
+  function pick(obj,keys){
+    for(var i=0;i<keys.length;i++){ if(obj[keys[i]]!==undefined&&obj[keys[i]]!==null) return obj[keys[i]]; }
+    for(var k in obj){ if(!Object.prototype.hasOwnProperty.call(obj,k))continue; var lk=lc(k);
+      for(var j=0;j<keys.length;j++){ if(lk===lc(keys[j])){ var v=obj[k]; if(v!==undefined&&v!==null) return v; } } }
+    return undefined;
+  }
+  function scalar(v){ return typeof v==="string"||typeof v==="number"; }
+  function personFrom(obj){
+    var containers=[obj];
+    ["user","author","owner","anchor","creator","userInfo","user_info","account"].forEach(function(k){
+      if(obj[k]&&typeof obj[k]==="object"&&!Array.isArray(obj[k])) containers.push(obj[k]); });
+    var name,handle;
+    for(var i=0;i<containers.length;i++){ var c=containers[i];
+      if(name===undefined){ var n=pick(c,NAME_KEYS); if(scalar(n)) name=String(n).trim(); }
+      if(handle===undefined){ var h=pick(c,HANDLE_KEYS); if(scalar(h)) handle=String(h).trim(); } }
+    if(name===undefined&&handle===undefined) return null;
+    var rank=pick(obj,RANK_KEYS), score=pick(obj,SCORE_KEYS);
+    var nums={};
+    for(var kk in obj){ if(!Object.prototype.hasOwnProperty.call(obj,kk))continue; var vv=obj[kk]; if(scalar(vv)){ var nv=scoreNum(vv); if(nv!=null) nums[lc(kk)]=nv; } }
+    return {name:name||"",handle:handle||"",rank:scalar(rank)?String(rank).trim():"",score:scalar(score)?String(score).trim():"",nums:nums};
+  }
+  function collect(root){
+    var out=[],stack=[root],guard=0;
+    while(stack.length&&guard<3000000){ guard++;
+      var node=stack.pop();
+      if(node===null||typeof node!=="object")continue;
+      if(Array.isArray(node)){ for(var a=node.length-1;a>=0;a--)stack.push(node[a]); continue; }
+      var p=personFrom(node); if(p&&(p.name||p.handle)) out.push(p);
+      for(var k in node){ if(!Object.prototype.hasOwnProperty.call(node,k))continue; var v=node[k]; if(v&&typeof v==="object")stack.push(v); } }
+    return out;
+  }
+  // When a list has ranks but no recognised score field, find the numeric field
+  // whose values fall as you go down the list (i.e. the metric the list is ranked by)
+  // and use it as the score. This catches "points"/"diamonds" under odd field names.
+  function detectScore(persons){
+    if(persons.length<3) return null;
+    var n=persons.length, counts={};
+    persons.forEach(function(p){ if(p.nums) for(var k in p.nums) counts[k]=(counts[k]||0)+1; });
+    var badKey=/id|uid|time|date|ts|sec|room|rank|index|position|level|age|gender|status|type|flag|region|country|lang|follow|fans|version|width|height|color/i;
+    var best=null,bestFit=0;
+    Object.keys(counts).forEach(function(k){
+      if(counts[k]<Math.ceil(n*0.6)) return;
+      if(badKey.test(k)) return;
+      var seq=[]; persons.forEach(function(p){ if(p.nums&&p.nums[k]!=null) seq.push(p.nums[k]); });
+      if(seq.length<3) return;
+      var mn=Math.min.apply(null,seq), mx=Math.max.apply(null,seq); if(mn===mx) return;
+      var ok=0,tot=0; for(var i=0;i<seq.length-1;i++){ tot++; if(seq[i]>=seq[i+1]) ok++; }
+      var fit=ok/tot;
+      if(fit>bestFit || (fit===bestFit && best && mx>best.max)){ bestFit=fit; best={key:k,max:mx}; }
+    });
+    if(best && bestFit>=0.8){
+      persons.forEach(function(p){ if((p.score===""||p.score==null) && p.nums && p.nums[best.key]!=null) p.score=String(p.nums[best.key]); });
+      return best.key;
+    }
+    return null;
+  }
+  // Find arrays whose elements are mostly person-like (the leaderboard lists),
+  // recording the field name each list sits under, in document order.
+  function findPersonArrays(root){
+    var lists=[];
+    function walk(node,key){
+      if(node===null||typeof node!=="object") return;
+      if(Array.isArray(node)){
+        var persons=[],personCount=0;
+        for(var i=0;i<node.length;i++){
+          var el=node[i];
+          if(el&&typeof el==="object"&&!Array.isArray(el)){
+            var p=personFrom(el);
+            if(p&&(p.name||p.handle)){ personCount++; persons.push(p); }
+          }
+        }
+        if(node.length>0 && personCount>=Math.ceil(node.length*0.6)){
+          var haveScore=0; persons.forEach(function(p){ if(p.score!=="") haveScore++; });
+          if(haveScore<Math.ceil(persons.length*0.6)) detectScore(persons);
+          lists.push({key:key||"(root)",people:persons}); return;
+        }
+        for(var j=0;j<node.length;j++) walk(node[j],key);
+        return;
+      }
+      for(var k in node){ if(Object.prototype.hasOwnProperty.call(node,k)){ var v=node[k]; if(v&&typeof v==="object") walk(v,k); } }
+    }
+    walk(root,null);
+    return lists;
+  }
+  function scoreNum(s){
+    if(s===""||s==null)return null;
+    var t=String(s).trim().toLowerCase().replace(/,/g,"").replace(/\s/g,"");
+    var m=t.match(/^([0-9]*\.?[0-9]+)([kmb])?$/);
+    if(!m){ var f=parseFloat(t); return isNaN(f)?null:f; }
+    var num=parseFloat(m[1]),mult=1;
+    if(m[2]==="k")mult=1e3;else if(m[2]==="m")mult=1e6;else if(m[2]==="b")mult=1e9;
+    return num*mult;
+  }
+  function parseInput(text){
+    text=text.trim(); var values=[],parsed=0,failed=0,harBodies=0;
+    if(!text)return{values:values,parsed:parsed,failed:failed,harBodies:harBodies};
+    function tryWhole(t){ try{ values.push(JSON.parse(t)); parsed++; return true; }catch(e){ return false; } }
+    if(!tryWhole(text)){ var blocks=extractJsonBlocks(text);
+      for(var i=0;i<blocks.length;i++){ try{ values.push(JSON.parse(blocks[i])); parsed++; }catch(e){ failed++; } } }
+    var expanded=[];
+    values.forEach(function(v){ expanded.push(v);
+      if(v&&v.log&&Array.isArray(v.log.entries)){ v.log.entries.forEach(function(en){
+        try{ var body=en&&en.response&&en.response.content&&en.response.content.text;
+          if(typeof body==="string"&&body.trim()){ try{ expanded.push(JSON.parse(body)); harBodies++; }catch(e){} } }catch(e){} }); } });
+    return{values:expanded,parsed:parsed,failed:failed,harBodies:harBodies};
+  }
+  function extractJsonBlocks(t){
+    var blocks=[],i=0,n=t.length;
+    while(i<n){ var c=t[i];
+      if(c==="{"||c==="["){ var start=i,depth=0,inStr=false,esc=false,open=c,close=(c==="{"?"}":"]"),closed=false;
+        for(var j=i;j<n;j++){ var ch=t[j];
+          if(inStr){ if(esc)esc=false; else if(ch==="\\")esc=true; else if(ch==='"')inStr=false; continue; }
+          if(ch==='"'){ inStr=true; continue; }
+          if(ch===open)depth++; else if(ch===close){ depth--; if(depth===0){ blocks.push(t.slice(start,j+1)); i=j+1; closed=true; break; } } }
+        if(!closed)i=start+1; } else i++; }
+    return blocks;
+  }
+
+  // ---------- XLSX writer (pure JS, offline) ----------
+  var CRC=(function(){var t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+  function crc32(u8){var crc=-1;for(var i=0;i<u8.length;i++)crc=(crc>>>8)^CRC[(crc^u8[i])&0xFF];return(crc^-1)>>>0;}
+  function cat(arrs){var len=0;arrs.forEach(function(a){len+=a.length;});var out=new Uint8Array(len),o=0;arrs.forEach(function(a){out.set(a,o);o+=a.length;});return out;}
+  function u16(n){return new Uint8Array([n&255,(n>>8)&255]);}
+  function u32(n){return new Uint8Array([n&255,(n>>8)&255,(n>>16)&255,(n>>>24)&255]);}
+  function zip(files){
+    var enc=new TextEncoder(),local=[],central=[],offset=0;
+    files.forEach(function(f){
+      var name=enc.encode(f.name),data=f.data,crc=crc32(data),sz=data.length;
+      var lh=cat([u32(0x04034b50),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(sz),u32(sz),u16(name.length),u16(0),name,data]);
+      local.push(lh);
+      central.push(cat([u32(0x02014b50),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(sz),u32(sz),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset),name]));
+      offset+=lh.length;
+    });
+    var cd=cat(central);
+    var end=cat([u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(cd.length),u32(offset),u16(0)]);
+    return cat(local.concat([cd,end]));
+  }
+  function xesc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function colLetter(n){var s="";n++;while(n>0){var m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;}
+  function buildXlsx(rows,cols){
+    var enc=new TextEncoder();
+    var sheet=['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
+      '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'];
+    // header
+    var hc=['<row r="1">'];
+    cols.forEach(function(c,ci){ hc.push('<c r="'+colLetter(ci)+'1" t="inlineStr" s="1"><is><t>'+xesc(c.label)+'</t></is></c>'); });
+    hc.push('</row>'); sheet.push(hc.join(""));
+    // body
+    rows.forEach(function(p,ri){
+      var r=ri+2, cells=['<row r="'+r+'">'];
+      cols.forEach(function(c,ci){
+        var ref=colLetter(ci)+r, v=c.get(p);
+        if(c.type==="link"){
+          var handle=v?String(v):"";
+          if(handle){
+            var url=BASE+handle, label=handle;
+            var f='HYPERLINK("'+url.replace(/"/g,'""')+'","'+label.replace(/"/g,'""')+'")';
+            cells.push('<c r="'+ref+'" t="str" s="2"><f>'+xesc(f)+'</f><v>'+xesc(label)+'</v></c>');
+          } else { cells.push('<c r="'+ref+'" t="inlineStr" s="3"><is><t>\u2014</t></is></c>'); }
+        } else if(c.type==="number"){
+          var num=c.num?c.num(p):Number(String(v).replace(/,/g,""));
+          if(v!==""&&v!=null&&isFinite(num)) cells.push('<c r="'+ref+'"><v>'+num+'</v></c>');
+          else if(v==null||v==="") cells.push('<c r="'+ref+'"/>');
+          else cells.push('<c r="'+ref+'" t="inlineStr"><is><t>'+xesc(v)+'</t></is></c>');
+        } else {
+          var txt=(v==null||v==="")?"\u2014":String(v);
+          var st=(v==null||v==="")?' s="3"':'';
+          cells.push('<c r="'+ref+'" t="inlineStr"'+st+'><is><t>'+xesc(txt)+'</t></is></c>');
+        }
+      });
+      cells.push('</row>'); sheet.push(cells.join(""));
+    });
+    sheet.push('</sheetData></worksheet>');
+
+    var styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+      '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'+
+      '<fonts count="4">'+
+      '<font><sz val="11"/><name val="Calibri"/></font>'+
+      '<font><b/><sz val="11"/><name val="Calibri"/></font>'+
+      '<font><u/><sz val="11"/><color rgb="FF0563C1"/><name val="Calibri"/></font>'+
+      '<font><sz val="11"/><color rgb="FF9AA0AE"/><name val="Calibri"/></font>'+
+      '</fonts>'+
+      '<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills>'+
+      '<borders count="1"><border/></borders>'+
+      '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'+
+      '<cellXfs count="4">'+
+      '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'+
+      '<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/>'+
+      '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>'+
+      '<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1"/>'+
+      '</cellXfs>'+
+      '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>'+
+      '</styleSheet>';
+
+    var files=[
+      {name:"[Content_Types].xml",data:enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>')},
+      {name:"_rels/.rels",data:enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>')},
+      {name:"xl/workbook.xml",data:enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Roster" sheetId="1" r:id="rId1"/></sheets></workbook>')},
+      {name:"xl/_rels/workbook.xml.rels",data:enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>')},
+      {name:"xl/styles.xml",data:enc.encode(styles)},
+      {name:"xl/worksheets/sheet1.xml",data:enc.encode(sheet.join(""))}
+    ];
+    return zip(files);
+  }
+
+  function download(name,bytes,mime){
+    var blob=new Blob([bytes],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement("a");
+    a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url);},600);
+  }
+  function copy(text,btn){
+    var done=function(){var t=btn.textContent;btn.textContent="Copied \u2713";setTimeout(function(){btn.textContent=t;},1400);};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(done).catch(function(){fb(text);done();});
+    else{fb(text);done();}
+  }
+  function fb(text){var ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(ta);}
+  function copyText(t){ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).catch(function(){fb(t);}); else fb(t); }
+  function flash(x,y,label){
+    var tip=document.createElement("div");tip.className="copytip";tip.textContent=label||"Copied \u2713";
+    tip.style.left=x+"px";tip.style.top=(y-6)+"px";document.body.appendChild(tip);
+    requestAnimationFrame(function(){tip.classList.add("show");});
+    setTimeout(function(){tip.classList.remove("show");setTimeout(function(){if(tip.parentNode)tip.parentNode.removeChild(tip);},250);},850);
+  }
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+  var current=[], expCols=[], tsvCols=[];
+  var $=function(id){return document.getElementById(id);};
+  var input=$("input"),status=$("status"),results=$("results"),tbody=$("tbody"),headRow=$("headRow"),
+      errbox=$("errbox"),empty=$("empty"),diag=$("diag"),diagList=$("diagList"),diagTitle=$("diagTitle");
+  function setStatus(m,cls){status.textContent=m||"";status.className="status"+(cls?" "+cls:"");}
+  function hide(el){el.style.display="none";} function show(el){el.style.display="block";}
+
+  function render(people,hasScore,hasRank,showPos){
+    current=people;
+    // on-screen columns
+    var screenCols=[];
+    if(showPos)screenCols.push({key:"__pos",label:"#",cls:"num"});
+    else if(hasRank)screenCols.push({key:"rank",label:"Rank",cls:"num"});
+    screenCols.push({key:"handle",label:"Username"});
+    screenCols.push({key:"name",label:"Display name"});
+    if(hasScore)screenCols.push({key:"score",label:"Score",cls:"num"});
+
+    headRow.innerHTML=screenCols.map(function(c){return "<th"+(c.cls==="num"?" class='num'":"")+">"+c.label+"</th>";}).join("");
+    var frag=document.createDocumentFragment();
+    people.forEach(function(p){
+      var tr=document.createElement("tr"),cells="";
+      screenCols.forEach(function(c){
+        if(c.key==="handle"){
+          if(p.handle) cells+="<td class='handle'><a href='"+BASE+esc(p.handle)+"' target='_blank' rel='noopener' data-copy='"+esc(p.handle)+"' title='Click: copy username + open profile'>@"+esc(p.handle)+"</a></td>";
+          else cells+="<td class='handle missing'>\u2014</td>";
+        } else if(c.key==="name"){
+          if(p.name) cells+="<td class='name copyable' data-copy='"+esc(p.name)+"' title='Click to copy'>"+esc(p.name)+"</td>";
+          else cells+="<td class='name missing'>\u2014</td>";
+        } else if(c.key==="score"){
+          var sv=esc(p.score||"");
+          if(p.score!=="") cells+="<td class='num copyable' data-copy='"+sv+"' title='Click to copy'>"+sv+"</td>";
+          else cells+="<td class='num'></td>";
+        } else { cells+="<td class='num'>"+esc(p[c.key]||"")+"</td>"; }
+      });
+      tr.innerHTML=cells; frag.appendChild(tr);
+    });
+    tbody.innerHTML=""; tbody.appendChild(frag);
+
+    // export columns (Excel .xlsx)
+    expCols=[];
+    if(showPos)expCols.push({label:"#",type:"number",get:function(p){return p.__pos;},num:function(p){return p.__pos;}});
+    else if(hasRank)expCols.push({label:"Rank",type:"number",get:function(p){return p.rank;},num:function(p){var n=parseFloat(String(p.rank).replace(/[^0-9.\-]/g,""));return isNaN(n)?NaN:n;}});
+    expCols.push({label:"Username",type:"link",get:function(p){return p.handle;}});
+    expCols.push({label:"Display name",type:"text",get:function(p){return p.name;}});
+    if(hasScore)expCols.push({label:"Score",type:"number",get:function(p){return p.score;},num:function(p){return p._s;}});
+
+    // Copy for Excel (tab-separated): username (no @), display name, score
+    tsvCols=[];
+    tsvCols.push({label:"Username",get:function(p){return p.handle||"";}});
+    tsvCols.push({label:"Display name",get:function(p){return p.name;}});
+    if(hasScore)tsvCols.push({label:"Score",get:function(p){return p.score;}});
+
+    $("count").textContent=people.length;
+    $("countLabel").textContent=people.length===1?"name found":"names found";
+    $("sortnote").textContent=showPos?"one ranking, sorted by score high \u2192 low":(hasRank?"sorted by rank (1 \u2192 last)":(hasScore?"sorted by score, high \u2192 low":"in leaderboard order"));
+    show(results);
+  }
+
+  function renderDiag(items,clean){
+    diagList.innerHTML="";
+    if(clean){ diagTitle.className="clean";
+      var d=document.createElement("div");d.className="diag-item clean";
+      d.innerHTML="<span class='tag'>clean</span><div>No anomalies. Every record had both a display name and a username, and all blocks parsed.</div>";
+      diagList.appendChild(d); show(diag); return; }
+    diagTitle.className="";
+    items.forEach(function(it){ var d=document.createElement("div");d.className="diag-item";
+      d.innerHTML="<span class='tag'>"+esc(it.tag)+"</span><div>"+it.html+(it.samples?"<div class='diag-samples'>"+esc(it.samples)+"</div>":"")+"</div>";
+      diagList.appendChild(d); });
+    show(diag);
+  }
+
+  $("extract").addEventListener("click",function(){
+    hide(errbox);hide(empty);hide(results);hide(diag);setStatus("");
+    var raw=input.value; if(!raw.trim()){ setStatus("Paste something first.","err"); return; }
+    var res; try{ res=parseInput(raw); }catch(e){ errbox.innerHTML="<b>Couldn't read that.</b> "+esc(e.message); show(errbox); return; }
+    if(res.values.length===0){ errbox.innerHTML="<b>No valid JSON found.</b> Paste the full <i>response</i> body (starts with <code>{</code> or <code>[</code>), not request headers or a screenshot."; show(errbox); return; }
+
+    var deep=$("optDeep").checked, largestOnly=$("optLargest").checked, scoreOnly=$("optScore").checked;
+    var all=[], kept=[], ignored=[];
+    res.values.forEach(function(v){
+      if(deep){ collect(v).forEach(function(p){ all.push(p); }); kept.push({key:"deep scan",n:"?"}); return; }
+      var lists=findPersonArrays(v);
+      if(largestOnly && lists.length>1){
+        lists.sort(function(a,b){return b.people.length-a.people.length;});
+        for(var x=1;x<lists.length;x++) ignored.push({key:lists[x].key,n:lists[x].people.length});
+        lists=[lists[0]];
+      }
+      lists.forEach(function(l){ kept.push({key:l.key,n:l.people.length}); l.people.forEach(function(p){ all.push(p); }); });
+    });
+
+    if(all.length===0){
+      empty.innerHTML="Read the data fine, but found no name/username fields. The response you pasted may be a different request than the one holding the rankings \u2014 grab the one whose response contains the creators' names.";
+      show(empty); setStatus("parsed "+res.parsed+" block(s), 0 people","err");
+      var pd=[]; if(res.failed)pd.push({tag:"parse",html:"<span class='n'>"+res.failed+"</span> block(s) looked like JSON but failed to parse and were skipped."});
+      if(pd.length)renderDiag(pd,false); return;
+    }
+
+    all.forEach(function(p){ p._s=scoreNum(p.score); });
+    var hiddenNoScore=0;
+    if(scoreOnly){ var before=all.length; all=all.filter(function(p){return p._s!=null;}); hiddenNoScore=before-all.length; }
+
+    if(all.length===0){
+      empty.innerHTML=scoreOnly?"Every name was filtered out because none had a readable score. Untick \u201cOnly names with a score\u201d to see them.":"No names left after filtering.";
+      show(empty); setStatus("0 records after filter","err"); hide(results); return;
+    }
+
+    var hasScore=all.some(function(p){return p.score!=="";});
+    var hasRank =all.some(function(p){return p.rank!=="";});
+    var combined=!largestOnly; // multiple lists merged into one ranking
+    all.forEach(function(p,i){ p._i=i; p._r=parseFloat(String(p.rank).replace(/[^0-9.\-]/g,"")); });
+
+    if(combined && hasScore){
+      // one continuous ranking by score, high -> low
+      all.sort(function(a,b){var av=a._s==null?-Infinity:a._s,bv=b._s==null?-Infinity:b._s;return bv!==av?bv-av:a._i-b._i;});
+    } else if(hasRank){
+      all.sort(function(a,b){var av=isNaN(a._r)?Infinity:a._r,bv=isNaN(b._r)?Infinity:b._r;return av!==bv?av-bv:a._i-b._i;});
+    } else if(hasScore){
+      all.sort(function(a,b){var av=a._s==null?-Infinity:a._s,bv=b._s==null?-Infinity:b._s;return bv!==av?bv-av:a._i-b._i;});
+    }
+
+    var showPos = combined && hasScore;   // show a sequential # for the merged ranking
+    all.forEach(function(p,i){ p.__pos=i+1; });
+    render(all,hasScore,hasRank,showPos);
+
+    var items=[];
+    var noHandle=all.filter(function(p){return !p.handle;});
+    var noName  =all.filter(function(p){return !p.name;});
+    var noScore =all.filter(function(p){return p._s==null;});
+    function fmt(arr){var seen={},parts=[];arr.forEach(function(s){var k=s.key+" ("+s.n+")";if(!seen[k]){seen[k]=1;parts.push(k);}});return parts.join(", ");}
+
+    if(ignored.length) items.push({tag:"other lists",html:"Ignored <span class='n'>"+ignored.length+"</span> other list(s) that are NOT the main leaderboard: <b>"+esc(fmt(ignored))+"</b>. These are separate fields (contributors, gifters, suggested, etc.) \u2014 not a continuation of the ranking. To fold them into one score-ranked list, untick \u201cOnly the largest list\u201d."});
+    if(combined && kept.length>1) items.push({tag:"combined",html:"Merged <span class='n'>"+kept.length+"</span> lists into one score ranking: <b>"+esc(fmt(kept))+"</b>. Check these fields really belong together \u2014 a score in one may not mean the same thing as in another."});
+    if(hiddenNoScore) items.push({tag:"filtered",html:"<span class='n'>"+hiddenNoScore+"</span> name(s) hidden because they had no score."});
+    if(res.failed)items.push({tag:"parse",html:"<span class='n'>"+res.failed+"</span> block(s) looked like JSON but failed to parse and were skipped."});
+    if(noHandle.length)items.push({tag:"no username",html:"<span class='n'>"+noHandle.length+"</span> record(s) had a display name but no username \u2014 shown with \u2014.",samples:noHandle.slice(0,6).map(function(p){return p.name;}).join("  \u00b7  ")});
+    if(noName.length)items.push({tag:"no name",html:"<span class='n'>"+noName.length+"</span> record(s) had a username but no display name.",samples:noName.slice(0,6).map(function(p){return "@"+p.handle;}).join("  \u00b7  ")});
+    if(!scoreOnly && noScore.length)items.push({tag:"no score",html:"<span class='n'>"+noScore.length+"</span> record(s) had no readable score"+(showPos?" and sit at the bottom":"")+"."});
+    renderDiag(items,items.length===0);
+
+    var srcNote = deep ? "deep scan" : fmt(kept);
+    setStatus("parsed "+res.parsed+" block(s)"+(res.harBodies?" + "+res.harBodies+" HAR bodies":"")+" \u00b7 "+srcNote+" \u00b7 "+all.length+" records","ok");
+  });
+
+  $("clear").addEventListener("click",function(){ input.value="";hide(results);hide(errbox);hide(empty);hide(diag);setStatus("");input.focus(); });
+
+  $("downloadExcel").addEventListener("click",function(){
+    if(!current.length)return;
+    var bytes=buildXlsx(current,expCols);
+    download("tiktok-campaign-roster.xlsx",bytes,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+  });
+  $("copyExcel").addEventListener("click",function(){
+    var header=tsvCols.map(function(c){return c.label;}).join("\t");
+    var lines=current.map(function(p){return tsvCols.map(function(c){return String(c.get(p)==null?"":c.get(p)).replace(/\t/g," ").replace(/\n/g," ");}).join("\t");});
+    copy(header+"\n"+lines.join("\n"),this);
+  });
+  $("copyHandles").addEventListener("click",function(){ copy(current.map(function(p){return p.handle?"@"+p.handle:"";}).filter(Boolean).join("\n"),this); });
+
+  // Click a cell to copy its value. Username also opens the profile (its link navigates as normal).
+  tbody.addEventListener("click",function(e){
+    var el=e.target.closest("[data-copy]");
+    if(!el)return;
+    copyText(el.getAttribute("data-copy"));
+    flash(e.pageX,e.pageY);
+    // for the username <a>, do not preventDefault so the profile still opens in a new tab
+  });
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var bm=document.getElementById("bm");
+  document.getElementById("copyBm").addEventListener("click",function(){
+    var b=this; navigator.clipboard.writeText(bm.getAttribute("href")).then(function(){b.textContent="copied";},function(){b.textContent="copy failed: drag the button instead";});
+  });
+  bm.addEventListener("click",function(e){ e.preventDefault(); alert("Drag this button to your bookmarks bar, then click it on a TikTok campaign page."); });
+  if(!/from=bookmarklet/.test(location.hash)||!window.opener) return;
+  var TIKTOK=/^https:\/\/([a-z0-9-]+\.)*tiktok\.com$/;
+  window.addEventListener("message",function(e){
+    if(!TIKTOK.test(e.origin)||!e.data||e.data.type!=="tiktok-campaign-data"||typeof e.data.payload!=="string") return;
+    var input=document.getElementById("input"); input.value=e.data.payload;
+    var note=document.createElement("div"); note.className="loaded";
+    var host=""; try{ host=new URL(e.data.page).hostname+new URL(e.data.page).pathname; }catch(x){}
+    note.textContent="Loaded from your TikTok tab"+(host?" ("+host+")":"")+". Extracting…";
+    input.parentNode.insertBefore(note,document.querySelector("label.field"));
+    history.replaceState(null,"",location.pathname);
+    document.getElementById("extract").click();
+    note.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  window.opener.postMessage({type:"extractor-ready"},"*");
+})();
+</script>
+</body>
+</html>
